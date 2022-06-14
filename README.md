@@ -1,7 +1,30 @@
-# apt-repo
+# ansible-role-apt-repo
 
-## Example Playbook
-```yml
+Add apt keys and apt repositories.
+
+## Debian and PPA
+
+The role, deliverately, does not support adding PPA repositories in Debian.
+
+# Requirements
+
+None
+
+# Role Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `apt_repo_to_add` | list of apt repository URLs | `[]` |
+| `apt_repo_keys_to_add` | list of apt key URLs | `[]` |
+| `apt_repo_enable_apt_transport_https` | install `apt-transport-https` if `True` | `false` |
+
+# Dependencies
+
+None
+
+# Example Playbook
+
+```yaml
 - hosts: localhost
   roles:
     - ansible-role-apt-repo
@@ -12,13 +35,10 @@
     apt_repo_enable_apt_transport_https: True
 ```
 
+# License
 
-
-
-
-## License
 ```
-**Copyright (c) 2016 Tomoyuki Sakurai <tomoyukis@reallyenglish.com>
+Copyright (c) 2016 Tomoyuki Sakurai <tomoyukis@reallyenglish.com>
 
 Permission to use, copy, modify, and distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -30,5 +50,9 @@ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
 ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.**
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
+
+# Author Information
+
+Tomoyuki Sakurai <tomoyukis@reallyenglish.com>
