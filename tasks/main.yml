@@ -4,5 +4,5 @@
 - include_vars: "{{ ansible_os_family }}.yml"
   when: ansible_os_family == 'Debian'
 
-- include: "install-{{ ansible_distro }}.yml"
+- include_tasks: "install-{{ ansible_distro }}.yml"
   when: ansible_os_family == 'Debian'
