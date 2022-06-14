@@ -11,16 +11,32 @@
     state: present
   when: apt_repo_enable_apt_transport_https
 
-- name: Add keys for repositories
+- name: "Add keys for repositorie: {{ item.repo_name }}"
   apt_key:
-    url: "{{ item }}"
+    url: "{{ item.repo_key}}"
     state: present
-  with_items: "{{ apt_repo_keys_to_add }}"
+    keyring: "{{ item.repo_keyring }}"
+  when: item.repo_keyring != ''
+  with_items: "{{ apt_repo }}"
   become: true
 
-- name: Add apt repositories (deb, deb-src)
+- name: "Add keys for repositorie: {{ item.repo_name }}"
+  apt_key:
+    url: "{{ item.repo_key}}"
+    state: present
+  when: item.repo_keyring == ''
+  with_items: "{{ apt_repo }}"
+  become: true
+
+
+- name: "Add apt repositorie: {{ item.repo_name }}"
   apt_repository:
-    repo: "{{ item }}"
+    repo: "{{ item.repo_link }}"
     state: present
   with_items: "{{ apt_repo_to_add }}"
+  become: true
+
+- name: update repos
+  apt:
+    update_cache: yes
   become: true
