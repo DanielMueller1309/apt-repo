@@ -1,8 +1,37 @@
 ---
-# tasks file for ansible-role-apt-repo
 
-- include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family == 'Debian'
+- name: Install apt-transport-https
+  apt:
+    name: apt-transport-https
+    state: present
+  when: apt_repo_enable_apt_transport_https
 
-- include_tasks: "install-{{ ansible_distro }}.yml"
-  when: ansible_os_family == 'Debian'
+- name: "Add keys for repositorie: {{ item.repo_name }}"
+  apt_key:
+    url: "{{ item.repo_key}}"
+    state: present
+    keyring: "{{ item.repo_keyring }}"
+  when: item.repo_keyring != ''
+  with_items: "{{ apt_repo }}"
+  become: true
+
+- name: "Add keys for repositorie: {{ item.repo_name }}"
+  apt_key:
+    url: "{{ item.repo_key}}"
+    state: present
+  when: item.repo_keyring == ''
+  with_items: "{{ apt_repo }}"
+  become: true
+
+
+- name: "Add apt repositorie: {{ item.repo_name }}"
+  apt_repository:
+    repo: "{{ item.repo_link }}"
+    state: present
+  with_items: "{{ apt_repo_to_add }}"
+  become: true
+
+- name: update repos
+  apt:
+    update_cache: yes
+  become: true
