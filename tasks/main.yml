@@ -26,9 +26,10 @@
 
 - name: "Add apt repositorie: {{ item.repo_name }}"
   apt_repository:
+    filename: "{{ item.repo_name }}"
     repo: "{{ item.repo_link }}"
     state: present
-  with_items: "{{ apt_repo_to_add }}"
+  with_items: "{{ apt_repo }}"
   become: true
 
 - name: update repos
