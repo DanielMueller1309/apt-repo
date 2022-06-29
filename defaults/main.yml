@@ -1,3 +1,6 @@
-apt_repo_to_add: []
-apt_repo_keys_to_add: []
-apt_repo_enable_apt_transport_https: False
+apt_repo:
+  - repo_name: brave
+    repo_link: "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+    repo_key: "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg"
+    repo_keyring: "/usr/share/keyrings/brave-browser-archive-keyring.gpg"
+apt_repo_enable_apt_transport_https: true
