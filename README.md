@@ -11,12 +11,14 @@ The role, deliverately, does not support adding PPA repositories in Debian.
 None
 
 # Role Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `apt_repo_to_add` | list of apt repository URLs | `[]` |
-| `apt_repo_keys_to_add` | list of apt key URLs | `[]` |
-| `apt_repo_enable_apt_transport_https` | install `apt-transport-https` if `True` | `false` |
+```yml
+apt_repo:
+  - repo_name: brave
+    repo_link: "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+    repo_key: "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg"
+    repo_keyring: "/usr/share/keyrings/brave-browser-archive-keyring.gpg"
+apt_repo_enable_apt_transport_https: true
+```
 
 # Dependencies
 
@@ -27,12 +29,14 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - ansible-role-apt-repo
+    - DanielMueller1309.apt-repo
   vars:
-    apt_repo_keys_to_add:
-      - https://artifacts.elastic.co/GPG-KEY-elasticsearch
-    apt_repo_to_add: "{% if ansible_distribution == 'Debian' %}[ 'deb https://artifacts.elastic.co/packages/5.x/apt stable main' ]{% elif ansible_distribution == 'Ubuntu' %}[ 'deb https://artifacts.elastic.co/packages/5.x/apt stable main', 'ppa:webupd8team/java' ]{% endif %}"
-    apt_repo_enable_apt_transport_https: True
+    apt_repo:
+      - repo_name: brave
+        repo_link: "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+        repo_key: "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg"
+        repo_keyring: "/usr/share/keyrings/brave-browser-archive-keyring.gpg"
+    apt_repo_enable_apt_transport_https: true
 ```
 
 # License
